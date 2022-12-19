@@ -1,5 +1,6 @@
 package com.example.promap.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.promap.R;
@@ -25,6 +27,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -83,23 +87,47 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             e.printStackTrace();
         }
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
         observeViewModel();
     }
     private void observeViewModel(){
         viewModel.projectsLiveData.observe(getViewLifecycleOwner(),projects -> {
-            System.out.println("HRE hree awerfasdcacavdsvav");
             mapFragment.getMapAsync(googleMap -> {
                 map = googleMap;
+                int i = 0;
                 for(Projects p:projects){
                     for(LatLng lt:p.getLocation_coordinates()){
                         map.addMarker(new MarkerOptions()
                                 .title(p.getProject_name())
-                                .position(lt));
+                                .position(lt)).setTag(i);
                     }
+                    ++i;
                 }
                 map.setOnMarkerClickListener(marker -> {
                     Toast.makeText(activity,marker.getTitle(), Toast.LENGTH_SHORT).show();
+                    return false;
+                });
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(projects.get(0).getLatLng(0), 15 ));
+                map.setOnMarkerClickListener(marker -> {
+                    Toast.makeText(activity,marker.getTag().toString(), Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder dialogueBuilder = new AlertDialog.Builder(requireContext());
+                    final View popup_view =getLayoutInflater().inflate(R.layout.popup_marker_detail,null);
+                    TextView projectNameView = popup_view.findViewById(R.id.project_name);
+                    TextView category = popup_view.findViewById(R.id.category);
+                    TextView start_date = popup_view.findViewById(R.id.start_date);
+                    TextView end_date = popup_view.findViewById(R.id.end_date);
+
+                    int pos = Integer.parseInt(marker.getTag().toString());
+
+                    Projects project = viewModel.projectsLiveData.getValue().get(pos);
+
+                    projectNameView.setText(project.getProject_name());
+                    category.setText(project.getCategory());
+                    start_date.setText(project.getProject_start_time().toString());
+                    end_date.setText(project.getProject_completion_time().toString());
+
+                    dialogueBuilder.setView(popup_view);
+                    AlertDialog dialog = dialogueBuilder.create();
+                    dialog.show();
                     return false;
                 });
             });
@@ -113,7 +141,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLng(dhaka));
 
         map.setOnMarkerClickListener(marker -> {
-            Toast.makeText(activity,marker.getTitle(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity,marker.getId(), Toast.LENGTH_SHORT).show();
             return false;
         });
     }

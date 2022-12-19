@@ -87,6 +87,9 @@ public class Projects {
     public ArrayList<LatLng> getLocation_coordinates() {
         return location_coordinates;
     }
+    public LatLng getLatLng(int pos){
+        return  location_coordinates.get(pos);
+    }
 
     public void setLocation_coordinates(ArrayList<LatLng> location_coordinates) {
         this.location_coordinates = new ArrayList<LatLng>();
