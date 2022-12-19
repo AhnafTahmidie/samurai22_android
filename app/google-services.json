@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "530753500608",
+    "project_id": "dufireflies",
+    "storage_bucket": "dufireflies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530753500608:android:72f6c774a36e23244bc425",
+        "android_client_info": {
+          "package_name": "com.example.promap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530753500608-b1af7lufdjpajcte9gm81sttnfhtlt4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqiqPPhNXB7Q84-vmnAEXzV47bD5v8oGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530753500608-b1af7lufdjpajcte9gm81sttnfhtlt4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
