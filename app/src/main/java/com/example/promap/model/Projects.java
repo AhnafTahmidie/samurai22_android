@@ -2,12 +2,24 @@ package com.example.promap.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Projects {
-    String project_name,category,affiliated_agency,
-    description,project_start_time,project_completion_time,
-    total_budget,completion_percentage;
-    LatLng location_coordinates;
+import java.util.ArrayList;
+import java.util.Date;
 
+public class Projects {
+    String project_name, category, affiliated_agency,
+            description, total_budget;
+    String completion_percentage;
+    ArrayList<LatLng> location_coordinates;
+    Date project_start_time, project_completion_time;
+    public Projects(){
+
+    }
+    public Projects(String project_name,String category,String affiliated_agency,String description){
+        this.project_name = project_name;
+        this.category=category;
+        this.affiliated_agency=affiliated_agency;
+        this.description = description;
+    }
     public String getProject_name() {
         return project_name;
     }
@@ -40,19 +52,19 @@ public class Projects {
         this.description = description;
     }
 
-    public String getProject_start_time() {
+    public Date getProject_start_time() {
         return project_start_time;
     }
 
-    public void setProject_start_time(String project_start_time) {
+    public void setProject_start_time(Date project_start_time) {
         this.project_start_time = project_start_time;
     }
 
-    public String getProject_completion_time() {
+    public Date getProject_completion_time() {
         return project_completion_time;
     }
 
-    public void setProject_completion_time(String project_completion_time) {
+    public void setProject_completion_time(Date project_completion_time) {
         this.project_completion_time = project_completion_time;
     }
 
@@ -72,11 +84,28 @@ public class Projects {
         this.completion_percentage = completion_percentage;
     }
 
-    public LatLng getLocation_coordinates() {
+    public ArrayList<LatLng> getLocation_coordinates() {
         return location_coordinates;
     }
 
-    public void setLocation_coordinates(LatLng location_coordinates) {
-        this.location_coordinates = location_coordinates;
+    public void setLocation_coordinates(ArrayList<LatLng> location_coordinates) {
+        this.location_coordinates = new ArrayList<LatLng>();
+        for (LatLng lt : location_coordinates) {
+            this.location_coordinates.add(lt);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Projects{" +
+                "project_name='" + project_name + '\'' +
+                ", category='" + category + '\'' +
+                ", affiliated_agency='" + affiliated_agency + '\'' +
+                ", description='" + description + '\'' +
+                ", total_budget='" + total_budget + '\'' +
+                ", completion_percentage='" + completion_percentage + '\'' +
+                ", project_start_time=" + project_start_time +
+                ", project_completion_time=" + project_completion_time +
+                '}';
     }
 }
